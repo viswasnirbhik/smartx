@@ -9,14 +9,13 @@
         <img src="assets/logo.png" alt="SmartX" class="logo">
         <h1>Family Login</h1>
         <div class="form-group">
-            <input type="text" id="family-name" placeholder="Family Name">
-            <input type="password" id="family-password" placeholder="Password">
+            <input type="text" id="family-name" placeholder="Family Name" required>
+            <input type="password" id="family-password" placeholder="Password" required>
         </div>
         <button onclick="loginFamily()">Login</button>
         <button onclick="createFamily()" class="secondary">Create Family</button>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
