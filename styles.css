@@ -1,114 +1,39 @@
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
+/* style.css */
 body {
-    background: #f5f7fa;
-    color: #333;
-    line-height: 1.6;
+  font-family: sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
 }
 
-/* Layout */
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  margin-top: 50px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ccc;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
 }
 
-.full-width {
-    grid-column: 1 / -1;
-}
-
-/* Cards */
-.card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-/* Forms */
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-/* Buttons */
 button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    background: #4361ee;
-    color: white;
-    cursor: pointer;
-    font-weight: 600;
-    margin-right: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
 }
 
-button.secondary {
-    background: white;
-    color: #4361ee;
-    border: 1px solid #4361ee;
+button:hover {
+  background-color: #0056b3;
 }
 
-/* Tables */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background: #f5f7fa;
-}
-
-/* Header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-.logo {
-    height: 40px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-    
-    header {
-        flex-direction: column;
-        gap: 15px;
-    }
+.summary, #history {
+  margin-top: 20px;
 }
