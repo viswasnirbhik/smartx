@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SmartX | Add Expenses</title>
+    <title>SmartX | Member</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,8 +16,8 @@
         <div class="card">
             <h2>Add Expense</h2>
             <div class="form-group">
-                <input type="text" id="expense-name" placeholder="Expense Name">
-                <input type="number" id="expense-amount" placeholder="Amount (₹)">
+                <input type="text" id="expense-name" placeholder="Expense Name" required>
+                <input type="number" id="expense-amount" placeholder="Amount (₹)" required>
                 <input type="date" id="expense-date">
             </div>
             <button onclick="addExpense()">Submit</button>
@@ -33,6 +33,7 @@
                         <th>Date</th>
                         <th>Expense</th>
                         <th>Amount</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
