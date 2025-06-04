@@ -1,34 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartX | Family Expenses</title>
+    <title>SmartX | Family Login</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="auth-container">
-        <div class="auth-card">
-            <div class="logo">
-                <img src="assets/logo.png" alt="SmartX Logo" width="120">
-                <h1>SmartX</h1>
-            </div>
-            <p class="subtitle">Track family expenses together</p>
-            
-            <div class="auth-form">
-                <div class="input-group">
-                    <input type="email" id="email" placeholder="Email" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="password" placeholder="Password" required>
-                </div>
-                <button class="btn-primary" onclick="login()">Login</button>
-                <button class="btn-secondary" onclick="signup()">Sign Up</button>
-            </div>
+    <div class="container">
+        <img src="assets/logo.png" alt="SmartX" class="logo">
+        <h1>Family Portal</h1>
+        
+        <div class="form-container">
+            <input type="email" id="family-email" placeholder="Family Email">
+            <input type="password" id="family-password" placeholder="Password">
+            <button onclick="loginFamily()">Login</button>
+            <button onclick="signupFamily()" class="secondary">Create Family</button>
         </div>
     </div>
 
-    <!-- Firebase SDK v8.9.1 (STABLE VERSION) -->
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
