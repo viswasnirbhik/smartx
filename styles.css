@@ -1,4 +1,4 @@
-/* Reset */
+/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -10,24 +10,44 @@ body {
     background: #f5f7fa;
     color: #333;
     line-height: 1.6;
+    min-height: 100vh;
 }
 
 /* Layout */
 .container {
-    max-width: 800px;
+    max-width: 100%;
+    padding: 20px;
     margin: 0 auto;
-    padding: 20px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
+@media (min-width: 768px) {
+    .container {
+        max-width: 800px;
+        padding: 40px 20px;
+    }
 }
 
-.full-width {
-    grid-column: 1 / -1;
+/* Header */
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    gap: 15px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
 }
 
 /* Cards */
@@ -39,34 +59,60 @@ body {
     margin-bottom: 20px;
 }
 
+.full-width {
+    width: 100%;
+}
+
+/* Grid Layout */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
 /* Forms */
 .form-group {
     margin-bottom: 15px;
 }
 
-.form-group input {
+.form-group input, 
+.form-group select {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 6px;
     margin-bottom: 10px;
+    font-size: 16px;
 }
 
 /* Buttons */
 button {
-    padding: 10px 15px;
+    padding: 12px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     background: #4361ee;
     color: white;
     cursor: pointer;
     font-weight: 600;
+    font-size: 16px;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #3a56d4;
 }
 
 button.secondary {
     background: white;
     color: #4361ee;
     border: 1px solid #4361ee;
+    margin-top: 10px;
+}
+
+button.secondary:hover {
+    background: #f0f2ff;
 }
 
 /* Tables */
@@ -74,6 +120,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
+    font-size: 14px;
 }
 
 th, td {
@@ -84,49 +131,85 @@ th, td {
 
 th {
     background: #f5f7fa;
+    font-weight: 600;
 }
 
-/* Header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.logo {
-    height: 40px;
-}
-
-/* Summary */
+/* Summary Cards */
 .summary {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     margin: 20px 0;
+    flex-wrap: wrap;
 }
 
 .summary div {
     flex: 1;
+    min-width: 120px;
     background: #f5f7fa;
     padding: 15px;
     border-radius: 8px;
     text-align: center;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-    
+.summary h4 {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.summary p {
+    font-size: 24px;
+    font-weight: 600;
+    color: #4361ee;
+}
+
+/* Filter Controls */
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.filter-controls select {
+    flex: 1;
+    min-width: 120px;
+}
+
+.filter-controls button {
+    width: auto;
+    padding: 12px 20px;
+}
+
+/* Members List */
+.members-list {
+    list-style: none;
+}
+
+.members-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
     header {
         flex-direction: column;
-        gap: 15px;
+        text-align: center;
     }
     
-    .summary {
-        flex-direction: column;
+    .filter-controls select {
+        min-width: 100%;
+    }
+    
+    .filter-controls button {
+        width: 100%;
+    }
+    
+    th, td {
+        padding: 8px 10px;
+        font-size: 13px;
     }
 }
