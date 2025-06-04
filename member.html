@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SmartX | Member</title>
+    <title>SmartX | Add Expenses</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <img src="assets/logo.png" alt="SmartX" class="logo">
-        <h1 id="member-display"></h1>
+        <h1 id="member-name"></h1>
         <button onclick="logout()">Logout</button>
     </header>
 
     <div class="container">
         <!-- Add Expense -->
         <div class="card">
-            <h2>Add Expense</h2>
+            <h2>Add New Expense</h2>
             <div class="form-group">
                 <input type="text" id="expense-name" placeholder="Expense Name" required>
                 <input type="number" id="expense-amount" placeholder="Amount (₹)" required>
                 <input type="date" id="expense-date">
             </div>
-            <button onclick="addExpense()">Submit</button>
+            <button onclick="addExpense()">Add Expense</button>
         </div>
 
         <!-- My Expenses -->
         <div class="card">
             <h2>My Expenses</h2>
-            <input type="month" id="filter-month" onchange="filterExpenses()">
             <table id="my-expenses">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Expense</th>
                         <th>Amount</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
