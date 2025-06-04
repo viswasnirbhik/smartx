@@ -14,7 +14,25 @@
         body {
             background: #f5f7fa;
             color: #333;
-            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            height: 40px;
+        }
+        
+        .user-email {
+            font-weight: bold;
+            margin-right: 15px;
         }
         
         .card {
@@ -24,7 +42,8 @@
             padding: 20px;
             margin-bottom: 20px;
             max-width: 800px;
-            margin: 20px auto;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         input {
@@ -86,6 +105,14 @@
     </style>
 </head>
 <body>
+    <header>
+        <div>
+            <img src="assets/logo.png" alt="SmartX" class="logo">
+            <span class="user-email" id="user-email-display"></span>
+        </div>
+        <button onclick="logout()">Logout</button>
+    </header>
+
     <div class="card">
         <h2>Add New Expense</h2>
         <input type="text" id="expense-name" placeholder="Expense Name (e.g. Guitar)" required>
@@ -153,12 +180,15 @@
         const myExpensesTable = document.getElementById('my-expenses').getElementsByTagName('tbody')[0];
         const monthTotal = document.getElementById('my-month-total');
         const yearTotal = document.getElementById('my-year-total');
+        const userEmailDisplay = document.getElementById('user-email-display');
 
         // Check authentication
         auth.onAuthStateChanged(user => {
             if (!user) {
                 window.location.href = 'index.html';
             } else {
+                // Display user email
+                userEmailDisplay.textContent = user.email;
                 loadExpenses();
             }
         });
@@ -188,6 +218,7 @@
                     amount: amount,
                     date: date,
                     memberEmail: user.email,
+                    familyId: user.uid, // Important for security rules
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     month: new Date(date).getMonth() + 1,
                     year: new Date(date).getFullYear()
@@ -230,13 +261,13 @@
                     const data = doc.data();
                     const row = myExpensesTable.insertRow();
                     
-                    // Format date
+                    // Format date (03-Jun-2025 format)
                     const date = new Date(data.date);
-                    const formattedDate = date.toLocaleDateString('en-IN', {
+                    const formattedDate = date.toLocaleDateString('en-GB', {
                         day: '2-digit',
                         month: 'short',
                         year: 'numeric'
-                    });
+                    }).replace(/ /g, '-');
                     
                     row.innerHTML = `
                         <td>${formattedDate}</td>
@@ -268,6 +299,12 @@
             setTimeout(() => {
                 errorMessage.textContent = '';
             }, 5000);
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
         }
     </script>
 </body>
