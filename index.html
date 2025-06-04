@@ -27,6 +27,23 @@
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+    
+    <script>
+        // Firebase Config (Updated with your correct config)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpg4XBr-tf7Gkagdh8iBVNzJ91oWMCE38",
+            authDomain: "smartx-nv.firebaseapp.com",
+            projectId: "smartx-nv",
+            storageBucket: "smartx-nv.appspot.com",  // Corrected storageBucket
+            messagingSenderId: "348904437504",
+            appId: "1:348904437504:web:57ed3b7738bdcfee4b25e5",
+            measurementId: "G-13QNMH37B1"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
