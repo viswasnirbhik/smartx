@@ -3,12 +3,51 @@
 <head>
     <title>SmartX | Dashboard</title>
     <style>
-        /* Add your dashboard styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4361ee;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div id="loader" class="loader"></div>
+        <div id="content" style="display: none;">
+            <!-- Dashboard content will be loaded here -->
+            <h1>Family Dashboard</h1>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+    
     <script>
-        // Initialize Firebase with same config
+        // Initialize Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyBpg4XBr-tf7Gkagdh8iBVNzJ91oWMCE38",
             authDomain: "smartx-nv.firebaseapp.com",
@@ -22,21 +61,28 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Protect route
+        // Check authentication
         auth.onAuthStateChanged(user => {
+            const loader = document.getElementById('loader');
+            const content = document.getElementById('content');
+            
             if (!user || !user.email.endsWith('@smartx.family')) {
+                // Not authenticated as family, redirect to login
                 window.location.href = 'index.html';
             } else {
-                // Load your dashboard content here
-                document.body.innerHTML = `
-                    <h1>Welcome to Dashboard</h1>
-                    <button id="logoutBtn">Logout</button>
-                    <!-- Add your dashboard content -->
-                `;
+                // User is properly authenticated
+                loader.style.display = 'none';
+                content.style.display = 'block';
                 
+                // Set up logout button
                 document.getElementById('logoutBtn').addEventListener('click', () => {
-                    auth.signOut();
+                    auth.signOut().then(() => {
+                        window.location.href = 'index.html';
+                    });
                 });
+                
+                // Load your dashboard content here
+                // You can add your member management and expense tracking UI
             }
         });
     </script>
