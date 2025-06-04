@@ -3,21 +3,20 @@
 <head>
     <title>SmartX | Family Login</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <img src="assets/logo.png" alt="SmartX" class="logo">
-        <h1>Family Portal</h1>
-        
-        <div class="form-container">
-            <input type="email" id="family-email" placeholder="Family Email">
+        <h1>Family Login</h1>
+        <div class="form-group">
+            <input type="text" id="family-name" placeholder="Family Name">
             <input type="password" id="family-password" placeholder="Password">
-            <button onclick="loginFamily()">Login</button>
-            <button onclick="signupFamily()" class="secondary">Create Family</button>
         </div>
+        <button onclick="loginFamily()">Login</button>
+        <button onclick="createFamily()" class="secondary">Create Family</button>
     </div>
 
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
