@@ -1,39 +1,24 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartX - Family Expense Manager</title>
-  <link rel="stylesheet" href="style.css">
+    <title>SmartX | Family Login</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>SmartX</h1>
-    <div id="auth">
-      <input type="text" id="familyId" placeholder="Enter Family ID">
-      <button onclick="loginFamily()">Login Family</button>
-      <div id="memberAuth" style="display:none">
-        <input type="text" id="memberName" placeholder="Enter Member Name">
-        <button onclick="loginMember()">Login Member</button>
-      </div>
+    <div class="container">
+        <img src="assets/logo.png" alt="SmartX" class="logo">
+        <h1>Family Login</h1>
+        <div class="form-group">
+            <input type="text" id="family-name" placeholder="Family Name" required>
+            <input type="password" id="family-password" placeholder="Password" required>
+        </div>
+        <button onclick="loginFamily()">Login</button>
+        <button onclick="createFamily()" class="secondary">Create Family</button>
     </div>
-    <div id="dashboard" style="display:none">
-      <h2>Welcome, <span id="currentMember"></span></h2>
-      <input type="text" id="expenseName" placeholder="Expense Name">
-      <input type="number" id="expenseAmount" placeholder="Amount">
-      <button onclick="addExpense()">Add Expense</button>
-      <div class="summary">
-        <p><strong>Monthly Total:</strong> ₹<span id="monthlyTotal"></span></p>
-        <p><strong>Yearly Total:</strong> ₹<span id="yearlyTotal"></span></p>
-        <p><strong>Your Total:</strong> ₹<span id="memberTotal"></span></p>
-      </div>
-      <h3>History</h3>
-      <div id="history"></div>
-    </div>
-  </div>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-  <script src="script.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
