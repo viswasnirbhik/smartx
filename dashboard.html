@@ -1,24 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartX | Dashboard</title>
     <style>
         /* Add your dashboard styles here */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f5f7fa;
-        }
-        
-        /* Add responsive styles for dashboard */
     </style>
 </head>
 <body>
     <script>
-        // Firebase Config - Same as index.html
+        // Initialize Firebase with same config
         const firebaseConfig = {
             apiKey: "AIzaSyBpg4XBr-tf7Gkagdh8iBVNzJ91oWMCE38",
             authDomain: "smartx-nv.firebaseapp.com",
@@ -28,32 +18,27 @@
             appId: "1:348904437504:web:57ed3b7738bdcfee4b25e5",
             measurementId: "G-13QNMH37B1"
         };
-
-        // Initialize Firebase
+        
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Check authentication state
+        // Protect route
         auth.onAuthStateChanged(user => {
             if (!user || !user.email.endsWith('@smartx.family')) {
-                // Not authenticated as family, redirect to login
                 window.location.href = 'index.html';
             } else {
-                // User is properly authenticated as family
-                initDashboard();
+                // Load your dashboard content here
+                document.body.innerHTML = `
+                    <h1>Welcome to Dashboard</h1>
+                    <button id="logoutBtn">Logout</button>
+                    <!-- Add your dashboard content -->
+                `;
+                
+                document.getElementById('logoutBtn').addEventListener('click', () => {
+                    auth.signOut();
+                });
             }
         });
-
-        function initDashboard() {
-            // Load your dashboard content here
-            document.body.innerHTML = `
-                <!-- Your dashboard HTML content -->
-                <h1>Family Dashboard</h1>
-                <!-- Rest of your dashboard UI -->
-            `;
-            
-            // Initialize your dashboard functionality
-        }
     </script>
 </body>
 </html>
