@@ -4,26 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartX | Family Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4361ee;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4361ee;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #3a56d4;
+        }
+        
+        button.secondary {
+            background: white;
+            color: #4361ee;
+            border: 1px solid #4361ee;
+        }
+        
+        .error-message {
+            color: #e63946;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
-        <div class="logo-header">
-            <img src="assets/logo.png" alt="SmartX" class="logo">
-            <h1>SmartX</h1>
-        </div>
-        
-        <div class="auth-card">
-            <h2>Family Login</h2>
-            <div class="input-group">
-                <input type="text" id="family-name" placeholder="Family Name" required>
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Password" required>
-            </div>
-            <button id="login-btn" class="primary-btn">Login</button>
-            <button id="create-family-btn" class="secondary-btn">Create Family</button>
-        </div>
+        <div class="logo">SMARTX</div>
+        <h2>Family Login</h2>
+        <input type="text" id="family-name" placeholder="Family Name" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button id="login-btn">Login</button>
+        <button id="create-family-btn" class="secondary">Create Family</button>
+        <div id="error-message" class="error-message"></div>
     </div>
 
     <!-- Firebase SDK -->
@@ -45,7 +113,91 @@
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // DOM Elements
+        const loginBtn = document.getElementById('login-btn');
+        const createFamilyBtn = document.getElementById('create-family-btn');
+        const familyNameInput = document.getElementById('family-name');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('error-message');
+
+        // Event Listeners
+        loginBtn.addEventListener('click', loginFamily);
+        createFamilyBtn.addEventListener('click', createFamily);
+
+        // Check authentication state
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is signed in
+                if (user.email.endsWith('@smartx.family')) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    window.location.href = 'member.html';
+                }
+            }
+        });
+
+        async function loginFamily() {
+            const familyName = familyNameInput.value.trim();
+            const password = passwordInput.value;
+            
+            if (!familyName || !password) {
+                showError("Please fill all fields");
+                return;
+            }
+            
+            const familyEmail = `${familyName.toLowerCase().replace(/\s+/g, '')}@smartx.family`;
+            
+            try {
+                await auth.signInWithEmailAndPassword(familyEmail, password);
+                // Redirect handled by auth state listener
+            } catch (error) {
+                showError("Login failed: " + error.message);
+                console.error(error);
+            }
+        }
+
+        async function createFamily() {
+            const familyName = familyNameInput.value.trim();
+            const password = passwordInput.value;
+            
+            if (!familyName || !password) {
+                showError("Please fill all fields");
+                return;
+            }
+            
+            const familyEmail = `${familyName.toLowerCase().replace(/\s+/g, '')}@smartx.family`;
+            
+            try {
+                // Create family account
+                const userCred = await auth.createUserWithEmailAndPassword(familyEmail, password);
+                
+                // Create family document in Firestore
+                await db.collection('families').doc(userCred.user.uid).set({
+                    name: familyName,
+                    members: [{
+                        email: familyEmail,
+                        role: 'admin',
+                        name: 'Admin'
+                    }],
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // Redirect handled by auth state listener
+            } catch (error) {
+                showError("Error: " + error.message);
+                console.error(error);
+            }
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            setTimeout(() => {
+                errorMessage.textContent = '';
+            }, 5000);
+        }
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
