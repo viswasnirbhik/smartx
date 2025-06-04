@@ -1,19 +1,18 @@
 // Firebase Configuration
 const firebaseConfig = {
-  apiKey: "YOUR_CORRECT_API_KEY",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:abcdef1234567890",
-  measurementId: "G-ABCDEF1234"
+    apiKey: "AIzaSyBpg4XBr-tf7Gkagdh8iBVNzJ91oWMCE38",
+    authDomain: "smartx-nv.firebaseapp.com",
+    projectId: "smartx-nv",
+    storageBucket: "smartx-nv.appspot.com",  // Corrected from .app to .appspot.com
+    messagingSenderId: "348904437504",
+    appId: "1:348904437504:web:57ed3b7738bdcfee4b25e5",
+    measurementId: "G-13QNMH37B1"
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-
 // DOM Ready Function
 document.addEventListener('DOMContentLoaded', function() {
     // Check authentication state
