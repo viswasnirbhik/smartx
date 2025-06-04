@@ -30,15 +30,9 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 20px auto;
             padding: 0 20px;
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
         }
         
         .card {
@@ -47,10 +41,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             padding: 20px;
             margin-bottom: 20px;
-        }
-        
-        .full-width {
-            grid-column: 1 / -1;
         }
         
         .form-group {
@@ -74,12 +64,6 @@
             cursor: pointer;
             font-weight: 600;
             width: 100%;
-        }
-        
-        button.secondary {
-            background: white;
-            color: #4361ee;
-            border: 1px solid #4361ee;
         }
         
         .summary {
@@ -112,13 +96,14 @@
             background: #f5f7fa;
         }
         
-        @media (max-width: 768px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            
+        @media (max-width: 600px) {
             .summary {
                 flex-direction: column;
+            }
+            
+            th, td {
+                padding: 8px;
+                font-size: 14px;
             }
         }
     </style>
@@ -133,76 +118,43 @@
     </header>
 
     <div class="container">
-        <div class="grid">
-            <!-- Add Member Section -->
-            <div class="card">
-                <h2>Add Family Member</h2>
-                <div class="form-group">
-                    <input type="email" id="member-email" placeholder="Member Email" required>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="member-password" placeholder="Temporary Password" required>
-                </div>
-                <button onclick="addMember()">Add Member</button>
+        <!-- Member Login Section -->
+        <div class="card">
+            <h2>Member Login</h2>
+            <div class="form-group">
+                <input type="email" id="login-email" placeholder="Member Email" required>
             </div>
+            <div class="form-group">
+                <input type="password" id="login-password" placeholder="Password" required>
+            </div>
+            <button onclick="loginMember()">Login as Member</button>
+        </div>
 
-            <!-- Member Login Section -->
-            <div class="card">
-                <h2>Member Login</h2>
-                <div class="form-group">
-                    <input type="email" id="login-email" placeholder="Member Email" required>
+        <!-- Family Expenses Summary -->
+        <div class="card">
+            <h2>Family Expenses</h2>
+            <div class="summary">
+                <div>
+                    <h3>This Month</h3>
+                    <p id="month-total">₹0</p>
                 </div>
-                <div class="form-group">
-                    <input type="password" id="login-password" placeholder="Password" required>
+                <div>
+                    <h3>This Year</h3>
+                    <p id="year-total">₹0</p>
                 </div>
-                <button onclick="loginMember()">Login as Member</button>
             </div>
-
-            <!-- Family Members -->
-            <div class="card">
-                <h2>Family Members</h2>
-                <ul id="members-list"></ul>
-            </div>
-
-            <!-- Family Expenses -->
-            <div class="card full-width">
-                <h2>Family Expenses</h2>
-                <div class="summary">
-                    <div>
-                        <h3>This Month</h3>
-                        <p id="month-total">₹0</p>
-                    </div>
-                    <div>
-                        <h3>This Year</h3>
-                        <p id="year-total">₹0</p>
-                    </div>
-                </div>
-                
-                <div style="display: flex; gap: 10px; margin: 15px 0;">
-                    <select id="month-filter">
-                        <option value="">All Months</option>
-                        <option value="1">January</option>
-                        <option value="2">February</option>
-                        <!-- Add other months -->
-                    </select>
-                    <select id="year-filter">
-                        <option value="">All Years</option>
-                    </select>
-                    <button onclick="filterExpenses()">Filter</button>
-                </div>
-                
-                <table id="expenses-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Member</th>
-                            <th>Expense</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
+            
+            <table id="expenses-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Member</th>
+                        <th>Expense</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
 
@@ -212,7 +164,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
     
     <script>
-        // Firebase Config - Same as before
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyBpg4XBr-tf7Gkagdh8iBVNzJ91oWMCE38",
             authDomain: "smartx-nv.firebaseapp.com",
@@ -233,60 +185,15 @@
             if (!user || !user.email.endsWith('@smartx.family')) {
                 window.location.href = 'index.html';
             } else {
-                // Load dashboard data
-                loadFamilyData();
-                initializeYearFilters();
+                // Extract family name from email
+                const familyName = user.email.split('@')[0].replace(/[^a-zA-Z]/g, ' ');
+                document.getElementById('family-name-display').textContent = familyName;
+                
+                // Load expenses
+                loadExpensesSummary();
+                loadExpensesTable();
             }
         });
-
-        // Load family data
-        async function loadFamilyData() {
-            const familyId = auth.currentUser.uid;
-            
-            // Load family name
-            const familyDoc = await db.collection('families').doc(familyId).get();
-            if (familyDoc.exists) {
-                document.getElementById('family-name-display').textContent = familyDoc.data().name;
-                loadMembersList(familyDoc.data().members);
-            }
-            
-            // Load expenses
-            loadExpensesSummary();
-            loadExpensesTable();
-        }
-
-        // Load members list
-        function loadMembersList(members) {
-            const membersList = document.getElementById('members-list');
-            membersList.innerHTML = '';
-            
-            members.forEach(member => {
-                const li = document.createElement('li');
-                li.textContent = `${member.email} (${member.role})`;
-                membersList.appendChild(li);
-            });
-        }
-
-        // Add member function
-        async function addMember() {
-            const email = document.getElementById('member-email').value;
-            const password = document.getElementById('member-password').value;
-            const familyId = auth.currentUser.uid;
-            
-            try {
-                await auth.createUserWithEmailAndPassword(email, password);
-                await db.collection('families').doc(familyId).update({
-                    members: firebase.firestore.FieldValue.arrayUnion({
-                        email: email,
-                        role: 'member'
-                    })
-                });
-                alert('Member added successfully!');
-                loadFamilyData();
-            } catch (error) {
-                alert('Error adding member: ' + error.message);
-            }
-        }
 
         // Login member function
         async function loginMember() {
@@ -334,14 +241,13 @@
         }
 
         // Load expenses table
-        async function loadExpensesTable(month = '', year = '') {
+        async function loadExpensesTable() {
             const familyId = auth.currentUser.uid;
-            let query = db.collection('expenses').where('familyId', '==', familyId);
+            const snapshot = await db.collection('expenses')
+                .where('familyId', '==', familyId)
+                .orderBy('date', 'desc')
+                .get();
             
-            if (month) query = query.where('month', '==', parseInt(month));
-            if (year) query = query.where('year', '==', parseInt(year));
-            
-            const snapshot = await query.orderBy('date', 'desc').get();
             const tbody = document.querySelector('#expenses-table tbody');
             tbody.innerHTML = '';
             
@@ -356,26 +262,6 @@
                 `;
                 tbody.appendChild(tr);
             });
-        }
-
-        // Initialize year filters
-        function initializeYearFilters() {
-            const currentYear = new Date().getFullYear();
-            const yearSelect = document.getElementById('year-filter');
-            
-            for (let year = currentYear - 5; year <= currentYear + 5; year++) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearSelect.appendChild(option);
-            }
-        }
-
-        // Filter expenses
-        function filterExpenses() {
-            const month = document.getElementById('month-filter').value;
-            const year = document.getElementById('year-filter').value;
-            loadExpensesTable(month, year);
         }
 
         // Logout function
