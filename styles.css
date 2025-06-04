@@ -1,4 +1,4 @@
-/* Reset & Base Styles */
+/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -12,27 +12,24 @@ body {
     line-height: 1.6;
 }
 
+/* Layout */
 .container {
-    max-width: 1000px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Header Styles */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
 }
 
-.logo {
-    height: 40px;
+.full-width {
+    grid-column: 1 / -1;
 }
 
-/* Card & Form Styles */
+/* Cards */
 .card {
     background: white;
     border-radius: 8px;
@@ -41,6 +38,7 @@ header {
     margin-bottom: 20px;
 }
 
+/* Forms */
 .form-group {
     margin-bottom: 15px;
 }
@@ -50,9 +48,10 @@ header {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    margin-bottom: 10px;
 }
 
-/* Button Styles */
+/* Buttons */
 button {
     padding: 10px 15px;
     border: none;
@@ -61,6 +60,7 @@ button {
     color: white;
     cursor: pointer;
     font-weight: 600;
+    margin-right: 10px;
 }
 
 button.secondary {
@@ -69,11 +69,7 @@ button.secondary {
     border: 1px solid #4361ee;
 }
 
-button.danger {
-    background: #f72585;
-}
-
-/* Table Styles */
+/* Tables */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -90,15 +86,19 @@ th {
     background: #f5f7fa;
 }
 
-/* Grid Layout */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
 }
 
-.full-width {
-    grid-column: 1 / -1;
+.logo {
+    height: 40px;
 }
 
 /* Responsive */
