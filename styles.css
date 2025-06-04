@@ -23,6 +23,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
+    padding: 20px;
 }
 
 .full-width {
@@ -40,75 +41,4 @@ body {
 
 /* Forms */
 .form-group {
-    margin-bottom: 15px;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
-}
-
-/* Buttons */
-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    background: #4361ee;
-    color: white;
-    cursor: pointer;
-    font-weight: 600;
-    margin-right: 10px;
-}
-
-button.secondary {
-    background: white;
-    color: #4361ee;
-    border: 1px solid #4361ee;
-}
-
-/* Tables */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background: #f5f7fa;
-}
-
-/* Header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-.logo {
-    height: 40px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
-    
-    header {
-        flex-direction: column;
-        gap: 15px;
-    }
-}
+    margin-bottom: 15px
