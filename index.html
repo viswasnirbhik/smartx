@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>SmartX | Family Login</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartX | Family Login</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="logo-container">
+    <div class="login-container">
+        <div class="logo-header">
             <img src="assets/logo.png" alt="SmartX" class="logo">
             <h1>SmartX</h1>
         </div>
         
-        <div class="card">
+        <div class="auth-card">
             <h2>Family Login</h2>
-            <div class="form-group">
+            <div class="input-group">
                 <input type="text" id="family-name" placeholder="Family Name" required>
+            </div>
+            <div class="input-group">
                 <input type="password" id="password" placeholder="Password" required>
             </div>
-            <button onclick="loginFamily()">Login</button>
-            <button onclick="createFamily()" class="secondary">Create Family</button>
+            <button id="login-btn" class="primary-btn">Login</button>
+            <button id="create-family-btn" class="secondary-btn">Create Family</button>
         </div>
     </div>
 
@@ -29,12 +32,12 @@
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
     
     <script>
-        // Firebase Config (Updated with your correct config)
+        // Firebase Config - Replace with your actual config
         const firebaseConfig = {
             apiKey: "AIzaSyBpg4XBr-tf7Gkagdh8iBVNzJ91oWMCE38",
             authDomain: "smartx-nv.firebaseapp.com",
             projectId: "smartx-nv",
-            storageBucket: "smartx-nv.appspot.com",  // Corrected storageBucket
+            storageBucket: "smartx-nv.appspot.com",
             messagingSenderId: "348904437504",
             appId: "1:348904437504:web:57ed3b7738bdcfee4b25e5",
             measurementId: "G-13QNMH37B1"
@@ -42,7 +45,6 @@
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
     </script>
     <script src="script.js"></script>
 </body>
